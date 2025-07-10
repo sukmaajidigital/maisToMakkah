@@ -1,0 +1,39 @@
+.select2-container .select2-selection--single {
+    height: 2.5rem;
+    /* sama seperti h-10 */
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    /* border-gray-300 */
+    border-radius: 0.375rem;
+    /* rounded-md */
+    font-size: 0.875rem;
+    /* text-sm */
+}
+
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__rendered {
+    color: #374151;
+    /* text-gray-700 */
+    line-height: 1.5rem;
+}
+
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__arrow {
+    height: 2.5rem;
+    right: 0.75rem;
+}
+
+.select2-container--default .select2-selection--single:hover {
+    border-color: #60a5fa;
+    /* border-blue-400 on hover */
+}
+
+.select2-container--default.select2-container--focus
+    .select2-selection--single {
+    border-color: #3b82f6;
+    /* focus:border-blue-500 */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    /* ring-2 ring-blue-500/50 */
+}
