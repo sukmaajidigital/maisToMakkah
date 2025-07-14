@@ -25,7 +25,7 @@
     @stack('style')
 </head>
 
-<body>
+<body class="bg-gray-100 dark:bg-gray-900">
     <x-header />
     <x-sidebar />
     <x-content :header="$header ?? 'Dashboard'">
