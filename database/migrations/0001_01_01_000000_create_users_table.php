@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            // base collumn
+            $table->foreignId('parent_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('rank_id')->constrained('ranks');
+            $table->decimal('bonus_balance', 15, 2)->default(0);
+
             $table->rememberToken();
             $table->timestamps();
         });
