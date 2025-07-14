@@ -1,20 +1,95 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+// Import semua controller yang akan kita gunakan
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NetworkController;
+use App\Http\Controllers\BonusController;
+use App\Http\Controllers\RankController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\RankController as AdminRankController;
+use App\Http\Controllers\Admin\ApprovalController as AdminApprovalController;
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Semua rute didefinisikan secara manual tanpa middleware otentikasi.
+|
+*/
 
-Route::prefix('admin')->group(function () {
-    Route::get('/', [UserController::class, 'index'])->name('user.index');
-    Route::get('create', [UserController::class, 'create'])->name('user.create');
-    Route::post('store', [UserController::class, 'store'])->name('user.store');
-    Route::get('edit/{ids}', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('update/{ids}', [UserController::class, 'update'])->name('user.update');
-    Route::delete('destroy/{ids}', [UserController::class, 'destroy'])->name('user.destroy');
+// Rute Halaman Depan / Landing Page
+Route::get('/', function () {
+    // Untuk saat ini, langsung arahkan ke dashboard
+    return redirect()->route('dashboard.index');
+});
+
+//=================================
+// == MENU UNTUK SEMUA PENGGUNA ==
+//=================================
+
+// Dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+// Jaringan Saya
+Route::get('/jaringan-saya', [NetworkController::class, 'index'])->name('network.index');
+
+// Grup untuk Bonus & Keuangan
+Route::prefix('bonus')->name('bonus.')->group(function () {
+    Route::get('/riwayat', [BonusController::class, 'history'])->name('history');
+    Route::get('/penarikan', [BonusController::class, 'withdraw'])->name('withdraw');
+    Route::post('/penarikan/store', [BonusController::class, 'storeWithdrawal'])->name('withdraw.store');
+});
+
+// Grup untuk Peringkat
+Route::prefix('peringkat')->name('rank.')->group(function () {
+    Route::get('/kualifikasi', [RankController::class, 'qualification'])->name('qualification');
+    Route::post('/klaim-peringkat/store', [RankController::class, 'claimRank'])->name('claim.store');
+});
+
+
+//=================================
+// ==      AREA KHUSUS ADMIN    ==
+//=================================
+
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    // --- Manajemen Pengguna ---
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', [AdminUserController::class, 'index'])->name('index');
+        Route::get('create', [AdminUserController::class, 'create'])->name('create');
+        Route::post('store', [AdminUserController::class, 'store'])->name('store');
+        Route::get('show/{user}', [AdminUserController::class, 'show'])->name('show');
+        Route::get('edit/{user}', [AdminUserController::class, 'edit'])->name('edit');
+        Route::put('update/{user}', [AdminUserController::class, 'update'])->name('update');
+        Route::delete('destroy/{user}', [AdminUserController::class, 'destroy'])->name('destroy');
+    });
+
+    // --- Manajemen Peringkat ---
+    Route::prefix('ranks')->name('ranks.')->group(function () {
+        Route::get('/', [AdminRankController::class, 'index'])->name('index');
+        Route::get('create', [AdminRankController::class, 'create'])->name('create');
+        Route::post('store', [AdminRankController::class, 'store'])->name('store');
+        Route::get('edit/{rank}', [AdminRankController::class, 'edit'])->name('edit');
+        Route::put('update/{rank}', [AdminRankController::class, 'update'])->name('update');
+        Route::delete('destroy/{rank}', [AdminRankController::class, 'destroy'])->name('destroy');
+    });
+
+    // --- Manajemen Persetujuan ---
+    Route::prefix('approvals')->name('approvals.')->group(function () {
+        // Halaman utama persetujuan (jika ada)
+        Route::get('/', [AdminApprovalController::class, 'index'])->name('index');
+
+        // Persetujuan Penarikan Dana
+        Route::get('/withdrawals', [AdminApprovalController::class, 'withdrawals'])->name('withdrawals');
+        Route::post('/withdrawals/{withdrawal}/approve', [AdminApprovalController::class, 'approveWithdrawal'])->name('withdrawals.approve');
+        Route::post('/withdrawals/{withdrawal}/reject', [AdminApprovalController::class, 'rejectWithdrawal'])->name('withdrawals.reject');
+
+        // Persetujuan Klaim Peringkat
+        Route::get('/rank-claims', [AdminApprovalController::class, 'rankClaims'])->name('ranks');
+        Route::post('/rank-claims/{rankClaim}/approve', [AdminApprovalController::class, 'approveRankClaim'])->name('ranks.approve');
+        Route::post('/rank-claims/{rankClaim}/reject', [AdminApprovalController::class, 'rejectRankClaim'])->name('ranks.reject');
+    });
 });
