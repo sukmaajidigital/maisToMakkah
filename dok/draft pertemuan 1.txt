@@ -1,0 +1,22 @@
+setiap mendapatkan 1 orang langsung dibawahnya, maka akan mendapat bonus 1jt misal jika sales 1 mendapatkan orang1,orang2,orang3,orang4,orang5, maka akan mendapatkan 5jt
+lalu jika setiap orang dibawahnya tadi mendapatkan orang lagi, maka tiap tiap orang yang didapatkan akan dihitung dan setiap orang bernilai 50rb untuk sales yang utama, hal ini juga berlaku untuk setiap sales yang ada
+
+misal seperti ini:
+orang1 memiliki orang dibawahnya sebanyak 2 yaitu [orang2,orang3] 
+lalu orang 2 memiliki orang dibawahnya sebanyak 3 yaitu [orang4,orang5,orang6] 
+dan orang 3 memiliki orang dibawahnya sebanyak 1 yaitu orang7
+lalu orang 5 memiliki 1 orang dibawahnya yaitu orang8
+
+maka hasil bonusnya seperti ini
+
+orang1 mendapatkan 2jt dari 2 orang langsung dibawahnya ditambah (50rb x 4 = 200rb ) dari 4 orang yang direkrut oleh orang dibawah dan dibawahnya lagi
+orang2 mendapatkan 3jt dari 3 orang langsung dibawahnya ditambah 50rb dari 1 orang yang direkrut oleh orang dibawah dan dibawahnya 
+orang3 mendapatkan 1jt dari 1 orang langsung dibawahnya 
+orang4,dan orang6 tidak karena tidak ada orang dibawahnya
+
+lalu ada konsep tingkatan lanjut, seperti manager,senior manager,executive manager,general manager,dan direktur
+untuk mencapai tingkatan manager dibutuhkan 100 orang dibawahnya secara langsung dan tidak langsung lalu untuk tingkat selanjutnya maka butuh kelipatan 100nya lagi, dan jika sudah mencapai tingkatan manager maka akan mendapatkan 20rb tambahan tiap tiap transaksi oleh orang dibawahnya misal orang 1 tadi mendapatkan 4 orang , kita ibaratkan dia manager, dengan tambahan transaksi 4, maka dia mendapatkan 200rb + 80rb, dan jika senior manager maka kelipatannya juga dari manager dan seterusnya
+
+untuk bonus diambil dari harga produk yang diambil yang disimpan di tabel produk produknya cuma 1 dengan harga awalnya adalah 10jt yang harganya akan bertambah berbeda beda di setiap akun karena menyesuaikan dengan tingkatan keberapa dia dari pohon akar mlm
+
+untuk proses prosesnya dilakukan secara manual, seperti withdrawl bonus dan kalim kuailifikasi
