@@ -11,4 +11,12 @@ class ApprovalController extends Controller
     {
         return view('admin.approvals.index');
     }
+    public function withdrawals()
+    {
+        return view('admin.approvals.withdrawals');
+    }
+    public function rankClaims()
+    {
+        return view('admin.approvals.rank-claims');
+    }
 }
