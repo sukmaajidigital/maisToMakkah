@@ -9,7 +9,7 @@
         </button>
     </div>
 </div>
-@push('script')
+@push('componentscript')
     <script>
         function copyToClipboard() {
             const input = document.getElementById('referral-link');
