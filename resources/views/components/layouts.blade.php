@@ -18,8 +18,11 @@
     <link rel="stylesheet" href="{{ asset('assets/datatable/datatable.css') }}" />
     <link rel="stylesheet" href="{{ asset('select2/select2.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('select2/custom.select2.css') }}" />
-    <link rel="stylesheet" href="{{ asset('flowbite/flowbite.min.css') }}" />
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" /> --}}
+    @if (config('app.vite_enabled'))
+        @vite(['resources/css/app.css'])
+    @else
+        <link rel="stylesheet" href="{{ asset('flowbite/flowbite.min.css') }}" />
+    @endif
     <link rel="stylesheet" href="{{ asset('alert/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     @stack('style')
@@ -35,8 +38,8 @@
     <script src="{{ asset('assets/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('select2/select2.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/datatable/datatable.min.js') }}"></script>
-    <script src="{{ asset('flowbite/flowbite.min.js') }}"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script> --}}
+    {{-- <script src="{{ asset('flowbite/flowbite.min.js') }}"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="{{ asset('alert/sweetalert2.all.min.js') }}"></script>
     @stack('script')
     @stack('componentscript')
