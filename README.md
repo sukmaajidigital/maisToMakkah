@@ -7,55 +7,121 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## 📦 REQUIREMENT
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Sebelum memulai, pastikan Anda telah menginstal:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   PHP >= 8.1
+-   Composer
+-   Node.js >= 18
+-   NPM >= 9
+-   MySQL / PostgreSQL / SQLite / lainnya (opsional tergantung proyek)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ⚙️ INSTALATION
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Ikuti langkah-langkah di bawah ini untuk mempersiapkan proyek:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. Clone Proyek
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone https://github.com/username/nama-proyek.git
+cd nama-proyek
+```
 
-## Laravel Sponsors
+### 2. Salin File Environment
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+cp .env.example .env
+```
 
-### Premium Partners
+### 3. Generate Key Aplikasi
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+php artisan key:generate
+```
 
-## Contributing
+### 4. Install Dependensi PHP
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer install
+```
 
-## Code of Conduct
+### 5. Install Dependensi Frontend (Vite)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+npm install
+```
 
-## Security Vulnerabilities
+### 6. Build Aset Produksi (Opsional)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Digunakan saat ingin mem-build aset frontend secara statis (mis. untuk production).
 
-## License
+```bash
+npm run build
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 7. Jalankan Server Laravel
+
+```bash
+php artisan serve
+```
+
+### 8. Jalankan Server Vite (Development Mode)
+
+```bash
+npm run dev
+```
+
+> 🟢 **NOTE:** Saat menjalankan `npm run dev`, pastikan `.env` memiliki entri berikut:
+>
+> ```env
+> VITE_ENABLED=true
+> ```
+>
+> Dan pastikan Blade file menggunakan direktif `@vite` seperti:
+>
+> ```blade
+> @vite(['resources/css/app.css', 'resources/js/app.js'])
+> ```
+
+---
+
+## 🧪 Migrasi & Seed Database (Opsional)
+
+Jika proyek ini menggunakan database dan seeder, jalankan:
+
+```bash
+php artisan migrate --seed
+```
+
+---
+
+## 🛠️ Struktur Umum Proyek
+
+```bash
+app/                # Kode utama backend (Controllers, Models, dll.)
+  ├── Http/Controllers # Controller aplikasi
+  ├── Models/          # model relational database
+resources/
+  ├── views/        # View Blade templates
+     └── componenets/        # Component Blade templates
+  └── css/          # Stylesheets
+routes/             # File routing Laravel (web.php)
+public/             # Aset publik
+```
+
+---
+
+## 💡 Tips Pengembangan
+
+-   Gunakan `php artisan route:list` untuk melihat semua rute.
+-   Gunakan `npm run build` sebelum deploy ke production.
+-   Jika ada perubahan besar pada `.env`, jalankan `php artisan config:clear`.
+
+---
+
+## 📄 MIT LICENSE
+
+Proyek ini menggunakan lisensi [MIT](LICENSE).
