@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('parent_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignId('rank_id')->constrained('ranks');
+            $table->foreignId('rank_id')->nullable()->constrained('ranks');
             $table->decimal('bonus_balance', 15, 2)->default(0);
         });
     }
