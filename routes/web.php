@@ -10,51 +10,48 @@ use App\Http\Controllers\RankController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\RankController as AdminRankController;
 use App\Http\Controllers\Admin\ApprovalController as AdminApprovalController;
+use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\Auth\AuthController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Semua rute didefinisikan secara manual tanpa middleware otentikasi.
-|
-*/
 
-// Rute Halaman Depan / Landing Page
 Route::get('/', function () {
-    // Untuk saat ini, langsung arahkan ke dashboard
+
     return redirect()->route('dashboard.index');
 });
-
-//=================================
-// == MENU UNTUK SEMUA PENGGUNA ==
-//=================================
-
-// Dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-
-// Jaringan Saya
-Route::get('/jaringan-saya', [NetworkController::class, 'index'])->name('network.index');
-
-// Grup untuk Bonus & Keuangan
-Route::prefix('bonus')->name('bonus.')->group(function () {
-    Route::get('/riwayat', [BonusController::class, 'history'])->name('history');
-    Route::get('/penarikan', [BonusController::class, 'withdraw'])->name('withdraw');
-    Route::post('/penarikan/store', [BonusController::class, 'storeWithdrawal'])->name('withdraw.store');
-});
-
-// Grup untuk Peringkat
-Route::prefix('peringkat')->name('rank.')->group(function () {
-    Route::get('/kualifikasi', [RankController::class, 'qualification'])->name('qualification');
-    Route::post('/klaim-peringkat/store', [RankController::class, 'claimRank'])->name('claim.store');
-});
-
-
-//=================================
-// ==      AREA KHUSUS ADMIN    ==
-//=================================
+Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('login', [AuthController::class, 'login'])->name('login.store');
+Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('register/store', [AuthController::class, 'register'])->name('register.store');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('login', [AdminAuthController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [AdminAuthController::class, 'login'])->name('login.store');
+    Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/jaringan-saya', [NetworkController::class, 'index'])->name('network.index');
+
+    Route::prefix('bonus')->name('bonus.')->group(function () {
+        Route::get('/riwayat', [BonusController::class, 'history'])->name('history');
+        Route::get('/penarikan', [BonusController::class, 'withdraw'])->name('withdraw');
+        Route::post('/penarikan/store', [BonusController::class, 'storeWithdrawal'])->name('withdraw.store');
+    });
+
+    Route::prefix('peringkat')->name('rank.')->group(function () {
+        Route::get('/kualifikasi', [RankController::class, 'qualification'])->name('qualification');
+        Route::post('/klaim-peringkat/store', [RankController::class, 'claimRank'])->name('claim.store');
+    });
+});
+
+
+Route::prefix('admin')->name('admin.')->middleware(['is.admin'])->group(function () {
+
+    Route::get('/', function () {
+        return redirect()->route('admin.users.index');
+    });
 
     // --- Manajemen Pengguna ---
     Route::prefix('users')->name('users.')->group(function () {
