@@ -20,6 +20,10 @@
     ];
 
     $adminMenus = [
+        'User' => [
+            'icon' => 'ti ti-user',
+            'route' => 'admin.users.index',
+        ],
         'Manajemen' => [
             'icon' => 'ti ti-settings-cog',
             'submenu' => [['title' => 'Pengguna', 'route' => 'admin.users.index', 'icon' => 'ti ti-users'], ['title' => 'Peringkat', 'route' => 'admin.ranks.index', 'icon' => 'ti ti-license']],
