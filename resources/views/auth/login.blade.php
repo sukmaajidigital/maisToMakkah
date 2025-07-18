@@ -26,6 +26,9 @@
                 <p class="text-sm text-center text-gray-500 dark:text-gray-400 mt-4">
                     Belum punya akun? <a href="{{ route('register') }}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Daftar di sini</a>
                 </p>
+                <p class="text-sm text-center text-gray-500 dark:text-gray-400 mt-4">
+                    Login sebagai administrator? <a href="{{ route('admin.login') }}" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Login di sini</a>
+                </p>
             </form>
         </div>
     </section>

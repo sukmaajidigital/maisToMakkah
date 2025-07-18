@@ -10,4 +10,8 @@ class NetworkController extends Controller
     {
         return view('network.index');
     }
+    public function register()
+    {
+        return view('network.register.index');
+    }
 }
