@@ -74,20 +74,6 @@ php artisan serve
 npm run dev
 ```
 
-> 🟢 **NOTE:** Saat menjalankan `npm run dev`, pastikan `.env` memiliki entri berikut:
->
-> ```env
-> VITE_ENABLED=true
-> ```
->
-> Dan pastikan Blade file menggunakan direktif `@vite` seperti:
->
-> ```blade
-> @vite(['resources/css/app.css'])
-> ```
-
----
-
 ## 🧪 Migrasi & Seed Database (Opsional)
 
 Jika proyek ini menggunakan database dan seeder, jalankan:

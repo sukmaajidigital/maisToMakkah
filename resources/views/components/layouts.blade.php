@@ -36,7 +36,7 @@
     <script src="{{ asset('assets/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('select2/select2.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/datatable/datatable.min.js') }}"></script>
-    {{-- <script src="{{ asset('flowbite/flowbite.min.js') }}"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="{{ asset('alert/sweetalert2.all.min.js') }}"></script>
     @stack('script')
