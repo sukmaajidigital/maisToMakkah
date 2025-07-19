@@ -22,11 +22,7 @@
                         <td>{{ $user->longname }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->phone }}</td>
-                        <td>
-                            <div class=" flex items-center gap-3">
-
-                            </div>
-                        </td>
+                        <td> {{ $user->phone }} </td>
                     </tr>
                 @endforeach
             </tbody>
