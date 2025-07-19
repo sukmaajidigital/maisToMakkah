@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\RankController as AdminRankController;
 use App\Http\Controllers\Admin\ApprovalController as AdminApprovalController;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\AuthController;
-
+use App\Http\Controllers\SettingUserController;
 
 Route::get('/', function () {
 
@@ -31,6 +31,9 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::middleware(['auth:web'])->group(function () {
+    Route::get('/settings', [SettingUserController::class, 'index'])->name('settings.index');
+    Route::put('/settings/update', [SettingUserController::class, 'update'])->name('settings.update');
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/jaringan-saya', [NetworkController::class, 'index'])->name('network.index');
     Route::get('/jaringan/register', [NetworkController::class, 'register'])->name('network.register');

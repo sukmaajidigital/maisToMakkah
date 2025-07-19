@@ -18,11 +18,9 @@
     <link rel="stylesheet" href="{{ asset('assets/datatable/datatable.css') }}" />
     <link rel="stylesheet" href="{{ asset('select2/select2.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('select2/custom.select2.css') }}" />
-    @if (config('app.vite_enabled'))
-        @vite(['resources/css/app.css'])
-    @else
-        <link rel="stylesheet" href="{{ asset('flowbite/flowbite.min.css') }}" />
-    @endif
+    @vite(['resources/css/app.css'])
+
+    <link rel="stylesheet" href="{{ asset('flowbite/flowbite.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('alert/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     @stack('style')

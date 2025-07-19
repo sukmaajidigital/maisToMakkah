@@ -16,6 +16,10 @@ class UserAndAdmin extends Seeder
             'name' => 'user',
             'longname' => 'User Long Name',
             'email' => 'user@example.com',
+            'phone' => '081234567890',
+            'bank_name' => 'BCA',
+            'bank_account_name' => 'User Long Name',
+            'bank_account_number' => '1234567890',
             'password' => bcrypt('user123'),
         ]);
 
