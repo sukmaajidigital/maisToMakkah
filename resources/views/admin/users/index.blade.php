@@ -3,7 +3,7 @@
         {{ $header ?? 'Data User' }}
     </x-slot:header>
     <div>
-        <x-table.datatable tablename="bahan">
+        <x-table.datatable tablename="users">
             <thead>
                 <tr>
                     <th>ID</th>

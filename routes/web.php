@@ -15,8 +15,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SettingUserController;
 
 Route::get('/', function () {
-
-    return redirect()->route('dashboard.index');
+    return view('check');
 });
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('login.store');

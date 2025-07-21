@@ -14,12 +14,12 @@
     <meta name="theme-color" content="#ffc107">
     <link rel="canonical" href="{{ url()->current() }}" />
     <link rel="shortcut icon" type="image/png" href="" />
-    <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ asset('select2/select2.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('select2/custom.select2.css') }}" />
-    @vite(['resources/css/app.css'])
     <link rel="stylesheet" href="{{ asset('alert/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">
     @stack('style')
 </head>
 
@@ -33,6 +33,10 @@
     <script src="{{ asset('assets/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('select2/select2.min.js') }}"></script>
     <script src="{{ asset('alert/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('assets/datatable/datatable.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
     @stack('script')
     @stack('componentscript')
     <script>
