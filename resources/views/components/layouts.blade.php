@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="">
+<html lang="en" class="">
 
 <head>
     <meta charset="utf-8">
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('select2/select2.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('select2/custom.select2.css') }}" />
     <link rel="stylesheet" href="{{ asset('alert/sweetalert2.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" />
+    <link rel="stylesheet" href="{{ asset('flowbite/flowbite.fix.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">
     @stack('style')
@@ -34,7 +34,7 @@
     <script src="{{ asset('select2/select2.min.js') }}"></script>
     <script src="{{ asset('alert/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('assets/datatable/datatable.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+    <script src="{{ asset('flowbite/flowbite.min.js') }}"></script>
     <script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
     @stack('script')
