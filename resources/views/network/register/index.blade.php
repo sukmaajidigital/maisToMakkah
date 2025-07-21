@@ -4,7 +4,7 @@
     </x-slot:header>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-1">
+        <div class="col-span-1">
             <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <form>
                     @include('network.register.field')
@@ -13,10 +13,9 @@
             </div>
         </div>
 
-        {{-- Withdrawal History Table --}}
-        <div class="lg:col-span-2">
+        <div class="col-span-2">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <x-table.datatable tablename="member_registered">
                     <caption class="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                         Member yang telah didaftarkan
                     </caption>
@@ -43,7 +42,7 @@
                             </tr>
                         @endfor
                     </tbody>
-                </table>
+                </x-table.datatable>
             </div>
         </div>
     </div>

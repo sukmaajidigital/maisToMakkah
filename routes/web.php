@@ -50,7 +50,7 @@ Route::middleware(['auth:web'])->group(function () {
 });
 
 
-Route::prefix('admin')->name('admin.')->middleware(['is.admin'])->group(function () {
+Route::prefix('admin')->middleware(['is.admin'])->group(function () {
 
     Route::get('/', function () {
         return redirect()->route('admin.users.index');
@@ -58,38 +58,37 @@ Route::prefix('admin')->name('admin.')->middleware(['is.admin'])->group(function
 
     // --- Manajemen Pengguna ---
     Route::prefix('users')->name('')->group(function () {
-        Route::get('/', [AdminUserController::class, 'index'])->name('users.index');
-        Route::get('create', [AdminUserController::class, 'create'])->name('users.create');
-        Route::post('store', [AdminUserController::class, 'store'])->name('users.store');
-        Route::get('show/{user}', [AdminUserController::class, 'show'])->name('users.show');
-        Route::get('edit/{user}', [AdminUserController::class, 'edit'])->name('users.edit');
-        Route::put('update/{user}', [AdminUserController::class, 'update'])->name('users.update');
-        Route::delete('destroy/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+        Route::get('/', [AdminUserController::class, 'index'])->name('admin.users.index');
+        Route::get('create', [AdminUserController::class, 'create'])->name('admin.users.create');
+        Route::post('store', [AdminUserController::class, 'store'])->name('admin.users.store');
+        Route::get('edit/{user}', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+        Route::put('update/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
+        Route::delete('destroy/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
     });
 
     // --- Manajemen Peringkat ---
     Route::prefix('ranks')->group(function () {
-        Route::get('/', [AdminRankController::class, 'index'])->name('ranks.index');
-        Route::get('create', [AdminRankController::class, 'create'])->name('ranks.create');
-        Route::post('store', [AdminRankController::class, 'store'])->name('ranks.store');
-        Route::get('edit/{rank}', [AdminRankController::class, 'edit'])->name('ranks.edit');
-        Route::put('update/{rank}', [AdminRankController::class, 'update'])->name('ranks.update');
-        Route::delete('destroy/{rank}', [AdminRankController::class, 'destroy'])->name('ranks.destroy');
+        Route::get('/', [AdminRankController::class, 'index'])->name('admin.ranks.index');
+        Route::get('create', [AdminRankController::class, 'create'])->name('admin.ranks.create');
+        Route::post('store', [AdminRankController::class, 'store'])->name('admin.ranks.store');
+        Route::get('edit/{rank}', [AdminRankController::class, 'edit'])->name('admin.ranks.edit');
+        Route::put('update/{rank}', [AdminRankController::class, 'update'])->name('admin.ranks.update');
+        Route::delete('destroy/{rank}', [AdminRankController::class, 'destroy'])->name('admin.ranks.destroy');
     });
 
     // --- Manajemen Persetujuan ---
     Route::prefix('approvals')->group(function () {
         // Halaman utama persetujuan (jika ada)
-        Route::get('/', [AdminApprovalController::class, 'index'])->name('approvals.index');
+        Route::get('/', [AdminApprovalController::class, 'index'])->name('admin.approvals.index');
 
         // Persetujuan Penarikan Dana
-        Route::get('/withdrawals', [AdminApprovalController::class, 'withdrawals'])->name('approvals.withdrawals');
-        Route::post('/withdrawals/{withdrawal}/approve', [AdminApprovalController::class, 'approveWithdrawal'])->name('withdrawals.approve');
-        Route::post('/withdrawals/{withdrawal}/reject', [AdminApprovalController::class, 'rejectWithdrawal'])->name('approvals.withdrawals.reject');
+        Route::get('/withdrawals', [AdminApprovalController::class, 'withdrawals'])->name('admin.approvals.withdrawals');
+        Route::post('/withdrawals/{withdrawal}/approve', [AdminApprovalController::class, 'approveWithdrawal'])->name('admin.withdrawals.approve');
+        Route::post('/withdrawals/{withdrawal}/reject', [AdminApprovalController::class, 'rejectWithdrawal'])->name('admin.approvals.withdrawals.reject');
 
         // Persetujuan Klaim Peringkat
-        Route::get('/rank-claims', [AdminApprovalController::class, 'rankClaims'])->name('approvals.ranks');
-        Route::post('/rank-claims/{rankClaim}/approve', [AdminApprovalController::class, 'approveRankClaim'])->name('approvals.ranks.approve');
-        Route::post('/rank-claims/{rankClaim}/reject', [AdminApprovalController::class, 'rejectRankClaim'])->name('approvals.ranks.reject');
+        Route::get('/rank-claims', [AdminApprovalController::class, 'rankClaims'])->name('admin.approvals.ranks');
+        Route::post('/rank-claims/{rankClaim}/approve', [AdminApprovalController::class, 'approveRankClaim'])->name('admin.approvals.ranks.approve');
+        Route::post('/rank-claims/{rankClaim}/reject', [AdminApprovalController::class, 'rejectRankClaim'])->name('admin.approvals.ranks.reject');
     });
 });
