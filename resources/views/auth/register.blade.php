@@ -13,8 +13,18 @@
     <section class="flex items-center justify-center h-screen">
         <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
             <h2 class="text-2xl font-bold text-center text-gray-900 dark:text-white mb-6">Daftar Akun Baru</h2>
+            @if (isset($upline))
+                <div id="alert-1" class="flex items-center p-4 mb-4 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-700 dark:text-blue-400" role="alert">
+                    <i class="ti ti-user-check"></i>
+                    <div class="ms-3 text-sm font-medium">
+                        Anda direferensikan oleh <span class="font-semibold">{{ $upline->longname }}</span>.
+                    </div>
+                </div>
+            @endif
             <form method="POST" action="{{ route('register.store') }}">
                 @csrf
+                {{-- Hidden field untuk menyimpan ID refferal --}}
+                <input type="hidden" name="parent_id" value="{{ $upline->id ?? '' }}">
                 <div class="mb-5">
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                     <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>

@@ -34,25 +34,47 @@ class AuthController extends Controller
     }
 
     // --- Register ---
-    public function showRegistrationForm()
+    public function showRegistrationForm(string $ref = null)
     {
-        return view('auth.register');
+        $upline = null;
+        if ($ref) {
+            $upline = User::where('name', $ref)->first();
+        }
+        return view('auth.register', compact('upline'));
     }
 
     public function register(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:users'],
             'longname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'parent_id' => ['nullable', 'integer', 'exists:users,id'], // Validasi parent_id
         ]);
+
         $user = User::create([
             'name' => $request->name,
             'longname' => $request->longname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'parent_id' => $request->parent_id, // Simpan ID upline
+            'rank_id' => 1, // Default rank, misalnya ID 1 untuk 'Member'
         ]);
+
+        // Berikan bonus referral kepada upline jika ada
+        if ($request->filled('parent_id')) {
+            $upline = User::find($request->parent_id);
+            if ($upline) {
+                // MASIH DIPROSES VALIDASI FUNGSI
+                // Logika pemberian bonus bisa ditambahkan di sini.
+                // Contoh:
+                // $upline->bonus_balance += 50000; // Tambah saldo bonus
+                // $upline->save();
+                // BonusHistory::create([...]); // Catat riwayat bonus
+            }
+        }
+
 
         Auth::guard('web')->login($user);
 
