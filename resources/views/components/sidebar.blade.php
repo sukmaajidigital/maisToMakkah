@@ -4,7 +4,16 @@
         'Dashboard' => ['icon' => 'ti ti-dashboard', 'route' => 'dashboard.index'],
         'Jaringan' => [
             'icon' => 'ti ti-network',
-            'submenu' => [['title' => 'Jaringan Saya', 'route' => 'network.index'], ['title' => 'Daftarkan Member', 'route' => 'network.register']],
+            'submenu' => [
+                [
+                    'title' => 'Jaringan Saya',
+                    'route' => 'network.index',
+                ],
+                [
+                    'title' => 'Daftarkan Member',
+                    'route' => 'network.register.index',
+                ],
+            ],
         ],
         'Bonus & Keuangan' => [
             'icon' => 'ti ti-wallet',

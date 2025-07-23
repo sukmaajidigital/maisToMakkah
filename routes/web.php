@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ApprovalController as AdminApprovalController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\NetworkRegisterController;
 use App\Http\Controllers\SettingUserController;
 
 Route::get('/', function () {
@@ -35,8 +36,15 @@ Route::middleware(['auth:web'])->group(function () {
     Route::put('/settings/update', [SettingUserController::class, 'update'])->name('settings.update');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/jaringan-saya', [NetworkController::class, 'index'])->name('network.index');
-    Route::get('/jaringan/register', [NetworkController::class, 'register'])->name('network.register');
+    Route::get('/jaringan/me/', [NetworkController::class, 'index'])->name('network.index');
+
+    Route::prefix('jaringan')->group(function () {
+        Route::get('/register', [NetworkRegisterController::class, 'index'])->name('network.register.index');
+        Route::post('/register', [NetworkRegisterController::class, 'store'])->name('network.register.store');
+        Route::get('/register/{user}/edit', [NetworkRegisterController::class, 'edit'])->name('network.register.edit');
+        Route::put('/register/{user}', [NetworkRegisterController::class, 'update'])->name('network.register.update');
+        Route::delete('/register/{user}', [NetworkRegisterController::class, 'destroy'])->name('network.register.destroy');
+    });
 
     Route::prefix('bonus')->group(function () {
         Route::get('/riwayat', [BonusController::class, 'history'])->name('bonus.history');

@@ -4,7 +4,7 @@
 <x-forms.text-input type="email" label="Email" name="email" id="email" placeholder="contoh@email.com" :value="old('email', $user->email ?? '')" :required="true" />
 
 {{-- Phone --}}
-<x-forms.text-input type="tel" label="Phone" name="phone" id="phone" placeholder="081234567890" :value="old('phone', $user->phone ?? '')" :required="true" />
+<x-forms.text-input type="tel" label="Phone" name="phone" id="phone" placeholder="08..." :value="old('phone', $user->phone ?? '')" :required="true" />
 
 {{-- Username --}}
 <x-forms.text-input label="Username" name="name" id="name" placeholder="Pilih name unik" :value="old('name', $user->name ?? '')" :required="true" />
