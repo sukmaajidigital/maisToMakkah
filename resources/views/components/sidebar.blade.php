@@ -17,7 +17,7 @@
     $adminMenus = [
         'Manajemen' => [
             'icon' => 'ti ti-settings-cog',
-            'submenu' => [['title' => 'Pengguna', 'route' => 'admin.users.index'], ['title' => 'Peringkat', 'route' => 'admin.ranks.index']],
+            'submenu' => [['title' => 'Pengguna', 'route' => 'admin.users.index'], ['title' => 'Produk', 'route' => 'admin.product.index']],
         ],
         'Persetujuan' => [
             'icon' => 'ti ti-check',

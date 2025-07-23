@@ -10,12 +10,13 @@ use App\Http\Controllers\RankController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\RankController as AdminRankController;
 use App\Http\Controllers\Admin\ApprovalController as AdminApprovalController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\SettingUserController;
 
 Route::get('/', function () {
-    return view('check');
+    return redirect()->route('dashboard.index');
 });
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('login.store');
@@ -74,6 +75,15 @@ Route::prefix('admin')->middleware(['is.admin'])->group(function () {
         Route::get('edit/{rank}', [AdminRankController::class, 'edit'])->name('admin.ranks.edit');
         Route::put('update/{rank}', [AdminRankController::class, 'update'])->name('admin.ranks.update');
         Route::delete('destroy/{rank}', [AdminRankController::class, 'destroy'])->name('admin.ranks.destroy');
+    });
+
+    Route::prefix('product')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('admin.product.index');
+        Route::get('create', [ProductController::class, 'create'])->name('admin.product.create');
+        Route::post('store', [ProductController::class, 'store'])->name('admin.product.store');
+        Route::get('edit/{rank}', [ProductController::class, 'edit'])->name('admin.product.edit');
+        Route::put('update/{rank}', [ProductController::class, 'update'])->name('admin.product.update');
+        Route::delete('destroy/{rank}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
     });
 
     // --- Manajemen Persetujuan ---
