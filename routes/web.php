@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 // Import semua controller yang akan kita gunakan
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\NetworkController;
+use App\Http\Controllers\NetworkMeController;
 use App\Http\Controllers\BonusController;
 use App\Http\Controllers\RankController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -36,9 +36,12 @@ Route::middleware(['auth:web'])->group(function () {
     Route::put('/settings/update', [SettingUserController::class, 'update'])->name('settings.update');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/jaringan/me/', [NetworkController::class, 'index'])->name('network.index');
 
-    Route::prefix('jaringan')->group(function () {
+    Route::prefix('network/me')->group(function () {
+        Route::get('/', [NetworkMeController::class, 'index'])->name('network.index');
+    });
+
+    Route::prefix('network')->group(function () {
         Route::get('/register', [NetworkRegisterController::class, 'index'])->name('network.register.index');
         Route::post('/register', [NetworkRegisterController::class, 'store'])->name('network.register.store');
         Route::get('/register/{user}/edit', [NetworkRegisterController::class, 'edit'])->name('network.register.edit');
