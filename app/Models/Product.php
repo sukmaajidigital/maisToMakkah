@@ -26,4 +26,11 @@ class Product extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+    public function getPriceForUser(User $user): float
+    {
+        $level = $user->getNetworkLevel();
+        $priceIncrease = 50000; // Kenaikan harga per level
+
+        return $this->base_price + ($level * $priceIncrease);
+    }
 }

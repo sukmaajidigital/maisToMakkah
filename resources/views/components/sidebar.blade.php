@@ -2,6 +2,7 @@
     // Definisikan menu untuk User biasa
     $userMenus = [
         'Dashboard' => ['icon' => 'ti ti-dashboard', 'route' => 'dashboard.index'],
+        'Order' => ['icon' => 'ti ti-shopping-bag', 'route' => 'order.index'],
         'Jaringan' => [
             'icon' => 'ti ti-network',
             'submenu' => [
@@ -17,7 +18,16 @@
         ],
         'Bonus & Keuangan' => [
             'icon' => 'ti ti-wallet',
-            'submenu' => [['title' => 'Riwayat Bonus', 'route' => 'bonus.history'], ['title' => 'Penarikan Dana', 'route' => 'bonus.withdraw']],
+            'submenu' => [
+                [
+                    'title' => 'Riwayat Bonus',
+                    'route' => 'bonus.history',
+                ],
+                [
+                    'title' => 'Penarikan Dana',
+                    'route' => 'bonus.withdraw',
+                ],
+            ],
         ],
         'Peringkat' => ['icon' => 'ti ti-trophy', 'route' => 'rank.qualification'],
     ];
@@ -26,7 +36,16 @@
     $adminMenus = [
         'Manajemen' => [
             'icon' => 'ti ti-settings-cog',
-            'submenu' => [['title' => 'Pengguna', 'route' => 'admin.users.index'], ['title' => 'Produk', 'route' => 'admin.product.index']],
+            'submenu' => [
+                [
+                    'title' => 'Pengguna',
+                    'route' => 'admin.users.index',
+                ],
+                [
+                    'title' => 'Produk',
+                    'route' => 'admin.product.index',
+                ],
+            ],
         ],
         'Persetujuan' => [
             'icon' => 'ti ti-check',

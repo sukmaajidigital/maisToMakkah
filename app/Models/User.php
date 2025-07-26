@@ -37,7 +37,30 @@ class User extends Authenticatable
         'rank_id',
         'bonus_balance',
     ];
+    protected $networkLevel = null;
 
+    /**
+     * Menghitung level/kedalaman user dalam jaringan secara rekursif.
+     * Level 0 adalah root/puncak.
+     *
+     * @return int
+     */
+    public function getNetworkLevel(): int
+    {
+        // Gunakan cache jika sudah pernah dihitung untuk efisiensi
+        if ($this->networkLevel !== null) {
+            return $this->networkLevel;
+        }
+
+        if ($this->parent_id === null) {
+            return $this->networkLevel = 0;
+        }
+
+        // Load relasi parent jika belum ada untuk menghindari N+1 problem
+        $this->loadMissing('parent');
+
+        return $this->networkLevel = 1 + $this->parent->getNetworkLevel();
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
