@@ -13,9 +13,7 @@ Sebelum memulai, pastikan Anda telah menginstal:
 
 -   PHP >= 8.1
 -   Composer
--   Node.js >= 18
--   NPM >= 9
--   MySQL / PostgreSQL / SQLite / lainnya (opsional tergantung proyek)
+-   MySQL / mariadb
 
 ---
 
@@ -48,30 +46,11 @@ php artisan key:generate
 composer install
 ```
 
-### 5. Install Dependensi Frontend (Vite)
 
-```bash
-npm install
-```
-
-### 6. Build Aset Produksi (Opsional)
-
-Digunakan saat ingin mem-build aset frontend secara statis (mis. untuk production).
-
-```bash
-npm run build
-```
-
-### 7. Jalankan Server Laravel
+### 5. Jalankan Server Laravel
 
 ```bash
 php artisan serve
-```
-
-### 8. Jalankan Server Vite (Development Mode)
-
-```bash
-npm run dev
 ```
 
 ## 🧪 Migrasi & Seed Database (Opsional)
@@ -103,7 +82,6 @@ public/             # Aset publik
 ## 💡 Tips Pengembangan
 
 -   Gunakan `php artisan route:list` untuk melihat semua rute.
--   Gunakan `npm run build` sebelum deploy ke production.
 -   Jika ada perubahan besar pada `.env`, jalankan `php artisan config:clear`.
 
 ---
