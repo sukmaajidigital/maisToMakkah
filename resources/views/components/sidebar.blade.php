@@ -49,7 +49,16 @@
         ],
         'Persetujuan' => [
             'icon' => 'ti ti-check',
-            'submenu' => [['title' => 'Penarikan', 'route' => 'admin.approvals.withdrawals'], ['title' => 'Klaim Peringkat', 'route' => 'admin.approvals.ranks']],
+            'submenu' => [
+                [
+                    'title' => 'Penarikan',
+                    'route' => 'admin.approvals.withdrawals',
+                ],
+                [
+                    'title' => 'Klaim Peringkat',
+                    'route' => 'admin.approvals.ranks',
+                ],
+            ],
         ],
     ];
 @endphp
