@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Admin;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,11 +12,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Urutan eksekusi sangat penting
         $this->call([
             AdminSeeder::class,
             RankSeeder::class,
-            UserSeeder::class,
-            ProductSeeder::class
+            ProductSeeder::class,
+            UserSeeder::class,         // Membuat struktur jaringan
+            TransactionSeeder::class,  // Mensimulasikan aktivitas (transaksi, bonus, klaim)
         ]);
     }
 }

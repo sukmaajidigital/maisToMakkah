@@ -14,10 +14,15 @@ class RankSeeder extends Seeder
     public function run(): void
     {
         $ranks = [
-            ['name' => 'Member', 'min_downline_count' => 0, 'transaction_bonus' => 5000],
-            ['name' => 'Leader', 'min_downline_count' => 10, 'transaction_bonus' => 10000],
-            ['name' => 'Manager', 'min_downline_count' => 50, 'transaction_bonus' => 15000],
-            ['name' => 'Director', 'min_downline_count' => 200, 'transaction_bonus' => 25000],
+            // Peringkat dasar, tanpa bonus transaksi
+            ['name' => 'Member', 'min_downline_count' => 0, 'transaction_bonus' => 0],
+
+            // Peringkat dengan bonus transaksi
+            ['name' => 'Manager', 'min_downline_count' => 100, 'transaction_bonus' => 20000],
+            ['name' => 'Senior Manager', 'min_downline_count' => 200, 'transaction_bonus' => 40000],
+            ['name' => 'Executive Manager', 'min_downline_count' => 300, 'transaction_bonus' => 60000],
+            ['name' => 'General Manager', 'min_downline_count' => 400, 'transaction_bonus' => 80000],
+            ['name' => 'Director', 'min_downline_count' => 500, 'transaction_bonus' => 100000],
         ];
 
         foreach ($ranks as $rank) {

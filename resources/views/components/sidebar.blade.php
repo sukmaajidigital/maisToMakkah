@@ -34,6 +34,7 @@
 
     // Definisikan menu untuk Admin
     $adminMenus = [
+        'Dashboard' => ['icon' => 'ti ti-dashboard', 'route' => 'admin.dashboard.index'],
         'Manajemen' => [
             'icon' => 'ti ti-settings-cog',
             'submenu' => [

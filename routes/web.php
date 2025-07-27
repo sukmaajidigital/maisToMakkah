@@ -10,6 +10,7 @@ use App\Http\Controllers\RankController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\RankController as AdminRankController;
 use App\Http\Controllers\Admin\ApprovalController as AdminApprovalController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\AuthController;
@@ -68,9 +69,7 @@ Route::middleware(['auth:web'])->group(function () {
 
 Route::prefix('admin')->middleware(['is.admin'])->group(function () {
 
-    Route::get('/', function () {
-        return redirect()->route('admin.users.index');
-    });
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
 
     // --- Manajemen Pengguna ---
     Route::prefix('users')->name('')->group(function () {

@@ -16,10 +16,10 @@ class UserSeeder extends Seeder
     public function run(): void
     {
 
-        // Ambil rank paling dasar (Member)
         $defaultRank = Rank::where('name', 'Member')->first();
+        $directorRank = Rank::where('name', 'Director')->first();
 
-        // --- LEVEL MASTER ---
+        // --- LEVEL 0 (ROOT USER) ---
         $level0User = User::create([
             'name' => 'user',
             'longname' => 'Test User',
@@ -28,24 +28,24 @@ class UserSeeder extends Seeder
             'phone' => '081200000000',
             'bank_name' => 'BCA',
             'bank_account_number' => '1234567890',
-            'bank_account_name' => 'Super Admin',
+            'bank_account_name' => 'Direktur Utama',
             'parent_id' => null,
-            'rank_id' => Rank::where('name', 'Director')->first()->id, // Rank tertinggi
+            'rank_id' => $directorRank->id,
         ]);
 
         // --- LEVEL 1 ---
         $level1Users = collect();
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $level1Users->push(User::factory()->create([
                 'parent_id' => $level0User->id,
-                'rank_id' => Rank::inRandomOrder()->first()->id,
+                'rank_id' => Rank::whereIn('name', ['Manager', 'Senior Manager'])->inRandomOrder()->first()->id,
             ]));
         }
 
         // --- LEVEL 2 ---
         $level2Users = collect();
         foreach ($level1Users as $parent) {
-            for ($i = 1; $i <= rand(2, 4); $i++) { // Setiap user level 1 punya 2-4 anak
+            for ($i = 1; $i <= rand(5, 10); $i++) {
                 $level2Users->push(User::factory()->create([
                     'parent_id' => $parent->id,
                     'rank_id' => $defaultRank->id,
@@ -54,24 +54,9 @@ class UserSeeder extends Seeder
         }
 
         // --- LEVEL 3 ---
-        $level3Users = collect();
         foreach ($level2Users as $parent) {
-            // Tidak semua user level 2 punya anak, untuk variasi
             if (rand(0, 1) === 1) {
-                for ($i = 1; $i <= rand(1, 3); $i++) {
-                    $level3Users->push(User::factory()->create([
-                        'parent_id' => $parent->id,
-                        'rank_id' => $defaultRank->id,
-                    ]));
-                }
-            }
-        }
-
-        // --- LEVEL 4 ---
-        foreach ($level3Users as $parent) {
-            // Tidak semua user level 3 punya anak
-            if (rand(0, 1) === 1) {
-                for ($i = 1; $i <= rand(1, 2); $i++) {
+                for ($i = 1; $i <= rand(3, 8); $i++) {
                     User::factory()->create([
                         'parent_id' => $parent->id,
                         'rank_id' => $defaultRank->id,
