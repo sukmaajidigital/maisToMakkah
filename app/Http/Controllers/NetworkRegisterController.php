@@ -27,11 +27,23 @@ class NetworkRegisterController extends Controller
      */
     public function store(Request $request)
     {
+        $upline = Auth::user();
+        $maxDownlines = 5;
+
+        // --- VALIDASI BARU ---
+        // Cek jumlah downline yang sudah dimiliki oleh upline
+        if ($upline->children()->count() >= $maxDownlines) {
+            return back()
+                ->withInput() // Mengembalikan input sebelumnya
+                ->with('error', "Pendaftaran gagal. Anda sudah mencapai batas maksimal {$maxDownlines} downline langsung.");
+        }
+
+        // Validasi input (tetap sama)
         $request->validate([
             'longname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:15'],
-            'name' => ['required', 'string', 'unique:users'],
+            'name' => ['required', 'string', 'max:255', 'unique:users'],
             'bank_name' => ['required', 'string', 'max:255'],
             'bank_account_number' => ['required', 'string', 'max:255'],
             'bank_account_name' => ['required', 'string', 'max:255'],
@@ -46,7 +58,7 @@ class NetworkRegisterController extends Controller
             'bank_account_number' => $request->bank_account_number,
             'bank_account_name' => $request->bank_account_name,
             'password' => Hash::make($request->password),
-            'parent_id' => Auth::id(),
+            'parent_id' => $upline->id,
             'rank_id' => null,
         ]);
 

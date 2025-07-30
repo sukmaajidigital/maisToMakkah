@@ -35,6 +35,7 @@ class UserSeeder extends Seeder
 
         // --- LEVEL 1 ---
         $level1Users = collect();
+        // Buat 5 downline langsung untuk user root
         for ($i = 1; $i <= 5; $i++) {
             $level1Users->push(User::factory()->create([
                 'parent_id' => $level0User->id,
@@ -45,7 +46,8 @@ class UserSeeder extends Seeder
         // --- LEVEL 2 ---
         $level2Users = collect();
         foreach ($level1Users as $parent) {
-            for ($i = 1; $i <= rand(5, 10); $i++) {
+            // Setiap user level 1 punya 1-5 anak
+            for ($i = 1; $i <= rand(1, 5); $i++) {
                 $level2Users->push(User::factory()->create([
                     'parent_id' => $parent->id,
                     'rank_id' => $defaultRank->id,
@@ -56,7 +58,8 @@ class UserSeeder extends Seeder
         // --- LEVEL 3 ---
         foreach ($level2Users as $parent) {
             if (rand(0, 1) === 1) {
-                for ($i = 1; $i <= rand(3, 8); $i++) {
+                // Setiap user level 2 punya 1-5 anak
+                for ($i = 1; $i <= rand(1, 5); $i++) {
                     User::factory()->create([
                         'parent_id' => $parent->id,
                         'rank_id' => $defaultRank->id,
