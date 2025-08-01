@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\RankController as AdminRankController;
 use App\Http\Controllers\Admin\ApprovalController as AdminApprovalController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\NetworkController as AdminNetworkController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\NetworkRegisterController;
@@ -82,7 +83,7 @@ Route::middleware(['auth:web'])->group(function () {
 Route::prefix('admin')->middleware(['is.admin'])->group(function () {
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
-
+    Route::get('/network', [AdminNetworkController::class, 'index'])->name('admin.network.index');
     // --- Manajemen Pengguna ---
     Route::prefix('users')->name('')->group(function () {
         Route::get('/', [AdminUserController::class, 'index'])->name('admin.users.index');

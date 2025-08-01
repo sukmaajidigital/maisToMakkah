@@ -35,19 +35,8 @@
     // Definisikan menu untuk Admin
     $adminMenus = [
         'Dashboard' => ['icon' => 'ti ti-dashboard', 'route' => 'admin.dashboard.index'],
-        'Manajemen' => [
-            'icon' => 'ti ti-settings-cog',
-            'submenu' => [
-                [
-                    'title' => 'Pengguna',
-                    'route' => 'admin.users.index',
-                ],
-                [
-                    'title' => 'Produk',
-                    'route' => 'admin.product.index',
-                ],
-            ],
-        ],
+        'Pengguna' => ['icon' => 'ti ti-user', 'route' => 'admin.users.index'],
+        'Jaringan' => ['icon' => 'ti ti-network', 'route' => 'admin.network.index'],
         'Persetujuan' => [
             'icon' => 'ti ti-check',
             'submenu' => [
