@@ -15,9 +15,9 @@ class Product extends Model
         'description',
     ];
 
-    protected $casts = [
-        'base_price' => 'decimal:2',
-    ];
+    // protected $casts = [
+    //     'base_price' => 'decimal:2',
+    // ];
 
     /**
      * Mendapatkan semua transaksi untuk produk ini.
@@ -26,11 +26,11 @@ class Product extends Model
     {
         return $this->hasMany(Transaction::class);
     }
-    public function getPriceForUser(User $user): float
-    {
-        $level = $user->getNetworkLevel();
-        $priceIncrease = 50000; // Kenaikan harga per level
+    // public function getPriceForUser(User $user): float
+    // {
+    //     $level = $user->getNetworkLevel();
+    //     $priceIncrease = 50000; // Kenaikan harga per level
 
-        return $this->base_price + ($level * $priceIncrease);
-    }
+    //     return $this->base_price + ($level * $priceIncrease);
+    // }
 }

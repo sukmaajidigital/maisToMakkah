@@ -13,26 +13,17 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
     /**
-     * Menampilkan halaman daftar produk dengan harga dinamis.
+     * Menampilkan halaman daftar produk.
      */
     public function index()
     {
-        $allProducts = Product::all();
-        $user = Auth::user();
-
-        // Siapkan data produk dengan harga yang sudah disesuaikan untuk view
-        $productsForView = $allProducts->map(function ($product) use ($user) {
-            return [
-                'product' => $product,
-                'price' => $product->getPriceForUser($user),
-            ];
-        });
-
-        return view('order.index', ['productsForView' => $productsForView]);
+        // Langsung ambil semua produk, harga tidak lagi dinamis.
+        $products = Product::all();
+        return view('order.index', compact('products'));
     }
 
     /**
-     * Memproses order produk dan mendistribusikan bonus multi-level.
+     * Memproses order produk dan mendistribusikan semua bonus yang berlaku.
      */
     public function store(Request $request)
     {
@@ -40,54 +31,84 @@ class OrderController extends Controller
 
         $product = Product::find($request->product_id);
         $buyer = Auth::user();
-        $pricePaid = $product->getPriceForUser($buyer); // Hitung harga dinamis
 
         try {
-            DB::transaction(function () use ($product, $buyer, $pricePaid) {
-                // 1. Buat transaksi dengan harga dinamis
+            DB::transaction(function () use ($product, $buyer) {
+                // 1. Buat transaksi dengan harga dasar (base_price)
                 $transaction = Transaction::create([
                     'user_id' => $buyer->id,
                     'product_id' => $product->id,
-                    'price_paid' => $pricePaid,
+                    'price_paid' => $product->base_price, // Menggunakan harga tetap
                     'transaction_date' => now(),
                 ]);
 
-                // 2. Distribusikan bonus secara berjenjang
-                $this->distributeMultiLevelBonus($buyer, $transaction);
+                // 2. Distribusikan semua bonus yang berlaku
+                $this->distributeAllBonuses($buyer, $transaction);
             });
         } catch (\Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan saat memproses pesanan. Silakan coba lagi. Error: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat memproses pesanan. Silakan coba lagi.');
         }
 
         return redirect()->route('order.index')->with('success', "Order untuk produk '{$product->name}' berhasil!");
     }
 
     /**
-     * Logika untuk mendistribusikan bonus ke semua level upline.
-     * @param User $buyer - User yang melakukan pembelian
-     * @param Transaction $transaction - Transaksi yang terkait
+     * Logika untuk mendistribusikan semua bonus:
+     * - Bonus Langsung (1jt untuk L1)
+     * - Bonus Tidak Langsung (50rb untuk L2)
+     * - Bonus Peringkat (berjenjang ke atas)
      */
-    private function distributeMultiLevelBonus(User $buyer, Transaction $transaction)
+    private function distributeAllBonuses(User $buyer, Transaction $transaction)
     {
-        $bonusAmount = 50000; // Bonus per level adalah selisih harga
         $currentUpline = $buyer->parent;
+        $level = 1;
 
-        // Lakukan perulangan selama masih ada upline di atasnya
         while ($currentUpline) {
-            // Berikan bonus ke upline saat ini
-            $currentUpline->increment('bonus_balance', $bonusAmount);
+            // Bonus Langsung (hanya untuk level 1)
+            if ($level === 1) {
+                $directBonus = 1000000;
+                $currentUpline->increment('bonus_balance', $directBonus);
+                BonusHistory::create([
+                    'user_id' => $currentUpline->id,
+                    'source_user_id' => $buyer->id,
+                    'transaction_id' => $transaction->id,
+                    'type' => 'direct_referral',
+                    'amount' => $directBonus,
+                    'description' => "Bonus referral langsung dari {$buyer->longname}",
+                ]);
+            }
 
-            BonusHistory::create([
-                'user_id' => $currentUpline->id,
-                'source_user_id' => $buyer->id,
-                'transaction_id' => $transaction->id,
-                'type' => 'indirect_referral', // Bisa disebut juga bonus jaringan/pass-up
-                'amount' => $bonusAmount,
-                'description' => "Bonus jaringan dari pembelian oleh {$buyer->longname}",
-            ]);
+            // Bonus Tidak Langsung (hanya untuk level 2)
+            if ($level === 2) {
+                $indirectBonus = 50000;
+                $currentUpline->increment('bonus_balance', $indirectBonus);
+                BonusHistory::create([
+                    'user_id' => $currentUpline->id,
+                    'source_user_id' => $buyer->id,
+                    'transaction_id' => $transaction->id,
+                    'type' => 'indirect_referral',
+                    'amount' => $indirectBonus,
+                    'description' => "Bonus jaringan dari {$buyer->longname}",
+                ]);
+            }
+
+            // Bonus Peringkat (untuk semua level upline yang memenuhi syarat)
+            if ($currentUpline->rank && $currentUpline->rank->transaction_bonus > 0) {
+                $rankBonus = $currentUpline->rank->transaction_bonus;
+                $currentUpline->increment('bonus_balance', $rankBonus);
+                BonusHistory::create([
+                    'user_id' => $currentUpline->id,
+                    'source_user_id' => $buyer->id,
+                    'transaction_id' => $transaction->id,
+                    'type' => 'rank_transaction',
+                    'amount' => $rankBonus,
+                    'description' => "Bonus Peringkat {$currentUpline->rank->name} dari transaksi {$buyer->longname}",
+                ]);
+            }
 
             // Pindah ke level upline selanjutnya
             $currentUpline = $currentUpline->parent;
+            $level++;
         }
     }
 }
