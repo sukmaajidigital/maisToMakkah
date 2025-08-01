@@ -19,10 +19,10 @@ class RankSeeder extends Seeder
 
             // Peringkat dengan bonus transaksi
             ['name' => 'Manager', 'min_downline_count' => 100, 'transaction_bonus' => 20000],
-            ['name' => 'Senior Manager', 'min_downline_count' => 200, 'transaction_bonus' => 40000],
-            ['name' => 'Executive Manager', 'min_downline_count' => 300, 'transaction_bonus' => 60000],
-            ['name' => 'General Manager', 'min_downline_count' => 400, 'transaction_bonus' => 80000],
-            ['name' => 'Director', 'min_downline_count' => 500, 'transaction_bonus' => 100000],
+            ['name' => 'Senior Manager', 'min_downline_count' => 200, 'transaction_bonus' => 20000],
+            ['name' => 'Executive Manager', 'min_downline_count' => 300, 'transaction_bonus' => 20000],
+            ['name' => 'General Manager', 'min_downline_count' => 400, 'transaction_bonus' => 20000],
+            ['name' => 'Direktur', 'min_downline_count' => 500, 'transaction_bonus' => 20000],
         ];
 
         foreach ($ranks as $rank) {

@@ -49,10 +49,10 @@ Route::middleware(['auth:web'])->group(function () {
     Route::prefix('network/me')->group(function () {
         Route::get('/', [NetworkMeController::class, 'index'])->name('network.index');
     });
-    Route::prefix('order')->group(function () {
-        Route::get('/', [OrderController::class, 'index'])->name('order.index');
-        Route::post('/store', [OrderController::class, 'store'])->name('order.store');
-    });
+    // Route::prefix('order')->group(function () {
+    //     Route::get('/', [OrderController::class, 'index'])->name('order.index');
+    //     Route::post('/store', [OrderController::class, 'store'])->name('order.store');
+    // });
     Route::prefix('network')->group(function () {
         Route::get('/register', [NetworkRegisterController::class, 'index'])->name('network.register.index');
         Route::post('/register', [NetworkRegisterController::class, 'store'])->name('network.register.store');

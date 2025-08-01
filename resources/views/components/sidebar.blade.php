@@ -2,7 +2,7 @@
     // Definisikan menu untuk User biasa
     $userMenus = [
         'Dashboard' => ['icon' => 'ti ti-dashboard', 'route' => 'dashboard.index'],
-        'Order' => ['icon' => 'ti ti-shopping-bag', 'route' => 'order.index'],
+        // 'Order' => ['icon' => 'ti ti-shopping-bag', 'route' => 'order.index'],
         'Jaringan' => [
             'icon' => 'ti ti-network',
             'submenu' => [

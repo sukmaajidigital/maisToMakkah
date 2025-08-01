@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             RankSeeder::class,
             ProductSeeder::class,
             UserSeeder::class,         // Membuat struktur jaringan
-            TransactionSeeder::class,  // Mensimulasikan aktivitas (transaksi, bonus, klaim)
+            // TransactionSeeder::class,  // Mensimulasikan aktivitas (transaksi, bonus, klaim)
         ]);
     }
 }
