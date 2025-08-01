@@ -23,13 +23,23 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
+        // Coba login sebagai admin terlebih dahulu
+        if (Auth::guard('admin')->attempt($credentials)) {
+            $request->session()->regenerate();
+            // Arahkan ke dashboard admin
+            return redirect()->intended(route('admin.dashboard.index'));
+        }
+
+        // Jika gagal sebagai admin, coba login sebagai pengguna biasa
         if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
+            // Arahkan ke dashboard pengguna
             return redirect()->intended(route('dashboard.index'));
         }
 
+        // Jika keduanya gagal, kembalikan error
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Kredensial yang Anda berikan tidak cocok dengan catatan kami.',
         ])->onlyInput('email');
     }
 
@@ -50,7 +60,7 @@ class AuthController extends Controller
             'longname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'parent_id' => ['nullable', 'integer', 'exists:users,id'], // Validasi parent_id
+            'parent_id' => ['nullable', 'integer', 'exists:users,id'],
         ]);
 
         $user = User::create([
@@ -58,23 +68,9 @@ class AuthController extends Controller
             'longname' => $request->longname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'parent_id' => $request->parent_id, // Simpan ID upline
-            'rank_id' => 1, // Default rank, misalnya ID 1 untuk 'Member'
+            'parent_id' => $request->parent_id,
+            'rank_id' => 1, // Default rank
         ]);
-
-        // Berikan bonus referral kepada upline jika ada
-        if ($request->filled('parent_id')) {
-            $upline = User::find($request->parent_id);
-            if ($upline) {
-                // MASIH DIPROSES VALIDASI FUNGSI
-                // Logika pemberian bonus bisa ditambahkan di sini.
-                // Contoh:
-                // $upline->bonus_balance += 50000; // Tambah saldo bonus
-                // $upline->save();
-                // BonusHistory::create([...]); // Catat riwayat bonus
-            }
-        }
-
 
         Auth::guard('web')->login($user);
 
@@ -84,16 +80,17 @@ class AuthController extends Controller
     // --- Logout ---
     public function logout(Request $request)
     {
+        // Logout dari guard yang sedang aktif
         if (Auth::guard('admin')->check()) {
             Auth::guard('admin')->logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            return redirect()->route('admin.login');
         } else {
             Auth::guard('web')->logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            return redirect('/');
         }
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        // Arahkan kembali ke halaman login utama
+        return redirect()->route('login');
     }
 }

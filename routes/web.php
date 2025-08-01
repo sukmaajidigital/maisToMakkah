@@ -12,27 +12,34 @@ use App\Http\Controllers\Admin\RankController as AdminRankController;
 use App\Http\Controllers\Admin\ApprovalController as AdminApprovalController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\NetworkRegisterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SettingUserController;
 
+/*
+|--------------------------------------------------------------------------
+| Public & Authentication Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', function () {
-    return redirect()->route('dashboard.index');
+    return redirect()->route('login');
 });
+
+// Rute login, registrasi, dan logout yang digabungkan
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('login.store');
 Route::get('register/{ref?}', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('register/store', [AuthController::class, 'register'])->name('register.store');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::prefix('admin')->group(function () {
-    Route::get('login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('login', [AdminAuthController::class, 'login'])->name('admin.login.store');
-    Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-});
 
+/*
+|--------------------------------------------------------------------------
+| User Authenticated Routes
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/settings', [SettingUserController::class, 'index'])->name('settings.index');
     Route::put('/settings/update', [SettingUserController::class, 'update'])->name('settings.update');
@@ -67,6 +74,11 @@ Route::middleware(['auth:web'])->group(function () {
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| Admin Authenticated Routes
+|--------------------------------------------------------------------------
+*/
 Route::prefix('admin')->middleware(['is.admin'])->group(function () {
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
