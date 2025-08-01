@@ -8,6 +8,9 @@ use App\Models\User;
 use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\WithdrawalsExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ApprovalController extends Controller
 {
@@ -138,5 +141,24 @@ class ApprovalController extends Controller
         ]);
 
         return back()->with('success', 'Klaim peringkat telah ditolak.');
+    }
+    public function exportWithdrawals(Request $request)
+    {
+        $format = $request->query('format');
+
+        if ($format === 'excel') {
+            // Gunakan ekstensi .xlsx yang valid
+            $filename = 'data-penarikan-pending-' . date('Y-m-d') . '.xlsx';
+            return Excel::download(new WithdrawalsExport(), $filename);
+        }
+
+        if ($format === 'pdf') {
+            $filename = 'data-penarikan-pending-' . date('Y-m-d') . '.pdf';
+            $withdrawals = Withdrawal::with('user')->where('status', 'pending')->get();
+            $pdf = Pdf::loadView('admin.approvals.withdrawals-pdf', ['withdrawals' => $withdrawals]);
+            return $pdf->setPaper('a4', 'landscape')->download($filename);
+        }
+
+        return redirect()->back()->with('error', 'Format ekspor tidak valid.');
     }
 }

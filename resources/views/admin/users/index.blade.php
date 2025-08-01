@@ -1,7 +1,18 @@
 <x-layouts>
     <x-slot:header>
-        {{ $header ?? 'Data Pengguna' }}
-        <x-button.create href="{{ route('admin.users.create') }}" />
+        <div class="flex items-center justify-between w-full">
+            <span>{{ $header ?? 'Data Pengguna' }}</span>
+            <div class="flex items-center gap-2">
+                <!-- Tombol Ekspor -->
+                <a href="{{ route('admin.users.export', ['format' => 'excel']) }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">
+                    Export Excel
+                </a>
+                <a href="{{ route('admin.users.export', ['format' => 'pdf']) }}" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition">
+                    Export PDF
+                </a>
+                <x-button.create href="{{ route('admin.users.create') }}" />
+            </div>
+        </div>
     </x-slot:header>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

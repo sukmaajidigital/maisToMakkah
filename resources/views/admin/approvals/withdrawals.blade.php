@@ -1,6 +1,17 @@
 <x-layouts>
     <x-slot:header>
-        Persetujuan Penarikan Dana
+        <div class="flex items-center justify-between w-full">
+            <span>{{ $header ?? 'Persetujuan Penarikan Dana' }}</span>
+            <div class="flex items-center gap-2">
+                <!-- Tombol Ekspor -->
+                <a href="{{ route('admin.approvals.withdrawals.export', ['format' => 'excel']) }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 focus:outline-none focus:border-green-700 focus:ring focus:ring-green-200 active:bg-green-600 disabled:opacity-25 transition">
+                    Export Excel
+                </a>
+                <a href="{{ route('admin.approvals.withdrawals.export', ['format' => 'pdf']) }}" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition">
+                    Export PDF
+                </a>
+            </div>
+        </div>
     </x-slot:header>
 
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>

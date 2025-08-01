@@ -92,6 +92,7 @@ Route::prefix('admin')->middleware(['is.admin'])->group(function () {
         Route::get('edit/{user}', [AdminUserController::class, 'edit'])->name('admin.users.edit');
         Route::put('update/{user}', [AdminUserController::class, 'update'])->name('admin.users.update');
         Route::delete('destroy/{user}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+        Route::get('/export', [AdminUserController::class, 'export'])->name('admin.users.export');
     });
 
     // --- Manajemen Peringkat ---
@@ -122,6 +123,7 @@ Route::prefix('admin')->middleware(['is.admin'])->group(function () {
         Route::get('/withdrawals', [AdminApprovalController::class, 'withdrawals'])->name('admin.approvals.withdrawals');
         Route::post('/withdrawals/{withdrawal}/approve', [AdminApprovalController::class, 'approveWithdrawal'])->name('admin.withdrawals.approve');
         Route::post('/withdrawals/{withdrawal}/reject', [AdminApprovalController::class, 'rejectWithdrawal'])->name('admin.approvals.withdrawals.reject');
+        Route::get('/withdrawals/export', [AdminApprovalController::class, 'exportWithdrawals'])->name('admin.approvals.withdrawals.export');
 
         // Persetujuan Klaim Peringkat
         Route::get('/rank-claims', [AdminApprovalController::class, 'rankClaims'])->name('admin.approvals.ranks');

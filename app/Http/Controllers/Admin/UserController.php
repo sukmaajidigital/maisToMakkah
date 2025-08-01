@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
@@ -101,5 +104,24 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil dihapus.');
+    }
+    public function export(Request $request)
+    {
+        $format = $request->query('format');
+
+        if ($format === 'excel') {
+            // Gunakan ekstensi .xlsx yang valid
+            $filename = 'data-pengguna-' . date('Y-m-d') . '.xlsx';
+            return Excel::download(new UsersExport(), $filename);
+        }
+
+        if ($format === 'pdf') {
+            $filename = 'data-pengguna-' . date('Y-m-d') . '.pdf';
+            $users = User::with(['rank', 'parent'])->get();
+            $pdf = Pdf::loadView('admin.users.pdf', ['users' => $users]);
+            return $pdf->download($filename);
+        }
+
+        return redirect()->back()->with('error', 'Format ekspor tidak valid.');
     }
 }
